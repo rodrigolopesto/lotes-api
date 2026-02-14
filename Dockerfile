@@ -1,6 +1,5 @@
 FROM php:8.2-apache
 
-# PDO Postgres
 RUN apt-get update \
  && apt-get install -y libpq-dev \
  && docker-php-ext-install pdo_pgsql \
@@ -8,8 +7,9 @@ RUN apt-get update \
 
 RUN a2enmod rewrite
 
-# Copia o conteúdo da pasta /api do repo para a RAIZ do site
-# Isso faz o arquivo api/lotes.php virar /lotes.php no servidor
+# copia TUDO que está na pasta "api/" do repo direto pra raiz do Apache
+# => api/lotes.php vira /lotes.php
+# => api/index.php vira /index.php
 COPY api/ /var/www/html/
 
 EXPOSE 80
